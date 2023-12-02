@@ -15,18 +15,22 @@ export class GPTChatService {
   public async initGptStorie(prompt: string): Promise<string> {
     this.messages.push({ role: 'user', content: 'create a story from this prompt: \n' + prompt }); // donam dues paraules claus per continuar la historia
 
-    debugger;
+    
     var responseBody = await this.sendMessages();
     var message = responseBody.choices[0].message.content;
     return message;
   }
 
   public async getGptStorieOptions(): Promise<string[]> {
-    debugger;
+    
     this.messages.push({ role: 'system', content: 'Give me two words separated by a comma that are key to continuing the story, then they will be used to further generate the story.' }); // donam dues paraules claus per continuar la historia
     
-    debugger;
+    
     var responseBody = await this.sendMessages();
+
+
+    //responseBody.then((response) => {});
+
     var keys = responseBody.choices[0].message.content;
     if (keys.includes(',')) {
       keys = keys.split(',');
@@ -49,13 +53,13 @@ export class GPTChatService {
     const body = JSON.stringify({
       model: 'gpt-3.5-turbo',
       messages: this.messages,
-      temperature: 1,
-      top_p: 1,
-      n: 1,
-      stream: false,
-      max_tokens: 500,
-      presence_penalty: 0,
-      frequency_penalty: 0,
+      //temperature: 1,
+      //top_p: 1,
+      //n: 1,
+      //stream: false,
+      max_tokens: 200,
+      //presence_penalty: 0,
+      //frequency_penalty: 0,
     });
 
     try {
@@ -65,7 +69,7 @@ export class GPTChatService {
         body: body,
       });
 
-      debugger;
+      
       if (!response.ok) {
         const errorText = await response.text();
 
