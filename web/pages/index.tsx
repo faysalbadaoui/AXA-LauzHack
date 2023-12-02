@@ -4,7 +4,7 @@ import Head from "next/head";
 import { Button } from "@nextui-org/button";
 import {Spinner, Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
-import {GPTChatService} from "./services/gpt";
+import {GPTChatService} from "../components/gpt";
 
 function HomePage() {
   const [step, setStep] = React.useState(1);
