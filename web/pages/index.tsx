@@ -6,7 +6,6 @@ import {Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
 function HomePage() {
   const [step, setStep] = React.useState(1);
-  const [globalContext, setGlobalContext] = React.useState(""); // State variable for user input
   const [userSituation, setUserSituation] = React.useState(""); // State variable for user input
 
   const handleSituationChange = (e) => {
