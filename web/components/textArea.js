@@ -4,7 +4,8 @@ function MessageArea({ text }) {
     const chunkSize = 10;
     const [currentText, setCurrentText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
-  
+    
+    
     useEffect(() => {
       const interval = setInterval(() => {
         if (currentIndex < text.length) {
@@ -25,8 +26,8 @@ function MessageArea({ text }) {
         </div>
         {currentText == text && (
             <div className="w-full flex flex.row justify-around mt-5">
-                <Button className="bg-[#800080]">Creative</Button>
-                <Button className="bg-[#800080]">Professional</Button>
+                <Button className="bg-[#9932CC]">Creative</Button>
+                <Button className="bg-[#9932CC]">Professional</Button>
                 <Button className="bg-[#FF0000]">X</Button>
             </div>
         )}
