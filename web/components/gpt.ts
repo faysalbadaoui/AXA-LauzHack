@@ -2,14 +2,19 @@
 export class GPTChatService {
   private apiUrl: string;
   private apiKey: string;
+  private apiImageKey: string;
   private messages: any;
+  private prompt: string;
 
   constructor() {
     //this.apiUrl = process.env.CHATGPT_PUBLIC_API_URL;
     //this.apiKey = process.env.CHATGPT_PUBLIC_API_KEY;
     this.apiUrl = "https://api.openai.com";
-    this.apiKey = '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';
+    //this.apiKey = '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';
+    this.apiKey = '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'; //Faysal
+    this.apiImageKey = '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';
     this.messages = [];
+    this.prompt = '';
   }
 
   public async getGptStorie(prompt: string): Promise<string> {
@@ -38,6 +43,15 @@ export class GPTChatService {
     return keys;
   }
 
+  public async getGptImage(prompt: string): Promise<string> {
+    
+    this.prompt = 'comic book style: ' + prompt;
+    var responseBody = await this.callChatGPTChatImage();
+
+    var keys = responseBody.data[0].url;
+
+    return keys;
+  }
 
   public async callChatGPTChat(): Promise<any> {
     const url = `${this.apiUrl}/v1/chat/completions`;
@@ -55,6 +69,49 @@ export class GPTChatService {
       //n: 1,
       //stream: false,
       max_tokens: 200,
+      //presence_penalty: 0,
+      //frequency_penalty: 0,
+    });
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: body,
+      });
+
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+
+        //throw new Error(`Failed to send messages: ${errorText}`);
+
+      }
+      const responseBody = await response.json();
+      return responseBody;
+    } catch (error) {
+      console.error('Error sending messages:', error);
+      //throw error;
+    }
+  }
+
+  public async callChatGPTChatImage(): Promise<any> {
+    const url = `${this.apiUrl}/v1//images/generations`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.apiImageKey}`,
+    };
+
+    const body = JSON.stringify({
+      model: 'dall-e-3',
+      prompt: this.prompt,
+      size: '1024x1024',
+      //temperature: 1,
+      //top_p: 1,
+      //n: 1,
+      //stream: false,
+      n: 1
       //presence_penalty: 0,
       //frequency_penalty: 0,
     });
