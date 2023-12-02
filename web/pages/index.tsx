@@ -3,7 +3,7 @@ import React from "react";
 import Head from "next/head";
 import { Button } from "@nextui-org/button";
 import {Textarea} from "@nextui-org/react";
-
+import MessageArea from "../components/textArea.js";
 function HomePage() {
   const [step, setStep] = React.useState(1);
   const [globalContext, setGlobalContext] = React.useState(""); // State variable for user input
@@ -46,27 +46,15 @@ function HomePage() {
           </div>    
         )} 
         {step === 2 && (
-          <div className="self-center flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:w-[700px] w-[490px] sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
+          <div className="self-center flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
             <h1 className="text-center font-bold text-[4vh] mb-10">
-              Describe your situation
+              Here's what Insunator thinks:
             </h1>
-            <Textarea
-              label="Tell us"
-              variant="bordered"
-              placeholder="Enter your situation"
-              disableAnimation
-              disableAutosize
-              value={userSituation} // Bind state to Textarea
-              onChange={handleSituationChange} // Set the change handler
-              classNames={{
-                base: "sm:w-[600px] w-[400px]",
-                input: "resize-y min-h-[190px]",
-              }}
-            />
-            <Button className="bg-[#9932CC] mt-10" onPress={onSubmit}>
-              Submit
-            </Button>
+            <MessageArea text="You should get a car insurance sad
+            d asd asdsa sadsadddddddddddddar insurance sad
+            " />
           </div>    
+          
         )} 
 
       </div>
