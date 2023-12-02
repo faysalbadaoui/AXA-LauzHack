@@ -24,8 +24,10 @@ function HomePage() {
       .then(result => {
         setStory(result);
         setClicked(false);
+        console.log(result);
         gptService.getGptStorieOptions().then(result => {
           setButtons(result);
+          console.log(result);
         }).catch(error => {
           console.error('Error:', error);
         });
@@ -43,8 +45,10 @@ function HomePage() {
     gptService.getGptStorie(userSituation)
       .then(result => {
         setStory(result);
+        console.log(result);
         gptService.getGptStorieOptions().then(result => {
           setButtons(result);
+          console.log(result);
         }).catch(error => {
           console.error('Error:', error);
         });
@@ -60,9 +64,9 @@ function HomePage() {
       <Head>
         <title>What Insurance could I need?</title>
       </Head>
-      <div className="flex w-full flex-col h-screen shadow shadow-white-500/90 hover:shadow-white-500/90 items-center justify-center bg-gradient-to-b from-[#000435] to-[#28002E]">
+      <div className="flex w-full flex-col h-screen items-center justify-center bg-gradient-to-b from-[#00008F] to-[#28002E]">
           {step === 1 && (
-            <div className="self-center flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:w-[700px] w-[490px] sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
+            <div className="self-center flex flex-col sm:p-20 shadow shadow-red-500/90 hover:shadow-red-500/90 p-5 sm:m-0 m-2 sm:w-[700px] w-[490px] sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold text-[4vh] mb-10">
                 What Insurance could you need?
               </h1>
@@ -90,11 +94,11 @@ function HomePage() {
             </div>    
           )} 
           {step === 2 && (
-            <div className="self-center shadow-indigo-500 flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
+            <div className="self-center shadow shadow-white-500/90 hover:shadow-white-500/90 flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold text-[4vh] mb-10">
                 Here's what Insunator thinks:
               </h1>
-              <MessageArea text={story} buttons = {buttons} onClickTheButton={onClickButtonsPage}/>
+              <MessageArea text={story} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
             </div>    
           )}        
       </div>
