@@ -11,24 +11,29 @@ function HomePage() {
   const [userSituation, setUserSituation] = React.useState(""); // State variable for user input
   const gptService = new GPTChatService(); // State variable for user input
   const [clicked, setClicked] = React.useState(false); // State variable for user input
+  const [story, setStory] = React.useState(""); // State variable for user input
   const handleSituationChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserSituation(e.target.value); 
     console.log(userSituation);
   };
-
+  const [buttons, setButtons] = React.useState([]); // State variable for user input
   const onSubmit = () => {
     setClicked(true);
-    const result = gptService.initGptStorie(userSituation)
+    gptService.initGptStorie(userSituation)
       .then(result => {
-        console.log(result);
+        setStory(result);
         setClicked(false);
+        gptService.getGptStorieOptions().then(result => {
+          setButtons(result);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
         setStep(2);
       })
       .catch(error => {
         console.error('Error:', error);
         setClicked(false);
-      });  
-    console.log(result);
+      }); 
   }
   return (
     <>
@@ -69,11 +74,9 @@ function HomePage() {
             <h1 className="text-center font-bold text-[4vh] mb-10">
               Here's what Insunator thinks:
             </h1>
-            <MessageArea text=""/>
+            <MessageArea text={story} buttons = {buttons}/>
           </div>    
-        )} 
-
-        
+        )}        
       </div>
     </>
   );
