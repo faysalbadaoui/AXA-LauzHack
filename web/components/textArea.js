@@ -4,7 +4,8 @@ function MessageArea({ text }) {
     const chunkSize = 10;
     const [currentText, setCurrentText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
-  
+    
+    
     useEffect(() => {
       const interval = setInterval(() => {
         if (currentIndex < text.length) {

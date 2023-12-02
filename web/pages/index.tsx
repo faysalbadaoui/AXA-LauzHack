@@ -4,15 +4,18 @@ import Head from "next/head";
 import { Button } from "@nextui-org/button";
 import {Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
+import {GPTChatService} from "./services/gpt.ts";
 function HomePage() {
   const [step, setStep] = React.useState(1);
   const [userSituation, setUserSituation] = React.useState(""); // State variable for user input
-
+  const gptService = new GPTChatService(); // State variable for user input
   const handleSituationChange = (e) => {
     setUserSituation(e.target.value); 
     console.log(userSituation);
   };
   const onSubmit = () => {
+    const result = gptService.getGptStorieOptions([{ role: 'user', content: 'Va un gos i cau.' }, { role: 'assistant', content: 'Un gos verd anava al cole' },{ role: 'system', content: 'Give me two words separated by a comma that are key to continuing the story, then they will be used to further generate the story.' }]);
+    console.log(result);
     setStep(2);
   }
   return (
