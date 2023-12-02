@@ -76,7 +76,12 @@ export class GPTChatService {
     this.prompt = 'comic book style: ' + prompt;
     var responseBody = await this.callChatGPTChatImage();
 
-    var keys = responseBody.data[0].url;
+    var keys : string;
+    if (responseBody == false){
+      keys = 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-HL3itsiK4BaIX5fQR2OkE8T2/user-63L3WQrKtpArmIckMx9hskYG/img-xUxEmOL6TnCLIojaMa9mcSXV.png?st=2023-12-02T21%3A14%3A44Z&se=2023-12-02T23%3A14%3A44Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-01T22%3A41%3A11Z&ske=2023-12-02T22%3A41%3A11Z&sks=b&skv=2021-08-06&sig=feAtpCT/BPPRWtdtESUecZ3H2/aLlTruiwhh3aWG2AE%3D';
+    } else {
+      keys = responseBody.data[0].url;
+    }
 
     return keys;
   }
