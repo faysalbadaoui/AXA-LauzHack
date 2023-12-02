@@ -65,11 +65,11 @@ function HomePage() {
         <title>What Insurance could I need?</title>
       </Head>
       <div className="flex w-full flex-col h-screen items-center justify-center bg-gradient-to-b from-[#00008F] to-[#28002E]">
-          <Image src="/res/logo.png" alt="logo" width={300} height={200} />
+          <Image src="/res/logo.png" alt="logo" width={250} height={150} />
           {step === 1 && (
             <div className="self-center flex flex-col sm:p-20 shadow shadow-red-500/90 hover:shadow-red-500/90 p-5 sm:m-0 m-2 sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold sm:text-[4vh] text-[3vh] mb-10">
-                What Insurance could you need?
+                Title of your  story
               </h1>
               <Textarea
                 label="Tell us"
