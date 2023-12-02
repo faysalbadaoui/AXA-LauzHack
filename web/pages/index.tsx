@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import {Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
 import {GPTChatService} from "./services/gpt.ts";
+
 function HomePage() {
   const [step, setStep] = React.useState(1);
   const [userSituation, setUserSituation] = React.useState(""); // State variable for user input
