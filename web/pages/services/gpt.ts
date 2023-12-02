@@ -15,7 +15,7 @@ export class GPTChatService {
   public async getGptStorie(prompt: string): Promise<string> {
     this.messages.push({ role: 'user', content: 'Compose a story chapter comprising 30 words based on the following prompt: \n' + prompt });
 
-    var responseBody = await this.sendMessages();
+    var responseBody = await this.callChatGPTChat();
     var message = responseBody.choices[0].message.content;
     return message;
   }
@@ -23,7 +23,7 @@ export class GPTChatService {
   public async getGptStorieOptions(): Promise<string[]> {
     
     this.messages.push({ role: 'system', content: 'Give me two adjective words strictly separated by a comma that will be used to continue with the next chapter of the story.' });
-    var responseBody = await this.sendMessages();
+    var responseBody = await this.callChatGPTChat();
 
 
     //responseBody.then((response) => {});
