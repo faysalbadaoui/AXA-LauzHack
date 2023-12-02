@@ -6,7 +6,18 @@ import {Spinner, Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
 import {GPTChatService} from "../components/gpt";
 import Image from "next/image";
+const { ethers } = require('ethers');
+
 function HomePage() {
+  const contractArtifact = require('./AquaSaveToken.json');
+  const contractABI = contractArtifact.abi;
+  const providerUrl = process.env.providerUrl;
+  const contractAddress = process.env.contractAddress;
+  const accountPrivateKey = process.env.accountPrivateKey;
+  const provider = new ethers.providers.JsonRpcProvider(providerUrl);
+  const signer = new ethers.Wallet(accountPrivateKey, provider);
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
   const [step, setStep] = React.useState(1);
   const [userSituation, setUserSituation] = React.useState(""); 
   const gptService = new GPTChatService(); 
@@ -102,7 +113,8 @@ function HomePage() {
               </h1>
               <MessageArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
             </div>    
-          )}        
+          )}      
+            
       </div>
     </>
   );
