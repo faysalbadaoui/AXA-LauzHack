@@ -7,8 +7,8 @@ export class GPTChatService {
   private prompt: string;
 
   constructor() {
-    this.apiUrl = process.env.CHATGPT_PUBLIC_API_URL;
-    this.apiKey = process.env.CHATGPT_PUBLIC_API_KEY;
+    this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL
+    this.apiKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY
     this.messages = [];
     this.prompt = '';
   }
