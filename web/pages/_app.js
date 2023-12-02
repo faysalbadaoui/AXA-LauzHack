@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
     <NextUIProvider>
         <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;1,100&display=swap" rel="stylesheet"/>
       </Head>
       <main className={inter.className}>
