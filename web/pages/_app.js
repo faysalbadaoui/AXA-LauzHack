@@ -2,18 +2,13 @@
 import { NextUIProvider } from "@nextui-org/react";
 import '../styles/tailwind.css'; // Import Tailwind CSS
 import '../styles/main.css'; // Import global CSS
-import './mouseCard.css';
-import RootLayout from "../layouts/layout.js";
-import { Kumbh_Sans } from 'next/font/google';
-import Head from "next/head";
+import RootLayout from "../layouts/layout";
 
-const inter = Kumbh_Sans({ subsets: ['latin'] })
 function MyApp({ Component, pageProps }) {
   return (
 
     <NextUIProvider>
-      
-      <main className={inter.className}>
+      <main>
         <RootLayout>
             <Component {...pageProps} />
         </RootLayout>
