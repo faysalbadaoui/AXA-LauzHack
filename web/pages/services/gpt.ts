@@ -22,7 +22,7 @@ export class GPTChatService {
 
   public async getGptStorieOptions(): Promise<string[]> {
     
-    this.messages.push({ role: 'system', content: 'Give me two words strictly separated by a comma that are key to continuing the next chapter of the story, then they will be used to generate a new chapter.' });
+    this.messages.push({ role: 'system', content: 'Give me two adjective words strictly separated by a comma that will be used to continue with the next chapter of the story.' });
     var responseBody = await this.sendMessages();
 
 
@@ -39,7 +39,7 @@ export class GPTChatService {
   }
 
 
-  public async sendMessages(): Promise<any> {
+  public async callChatGPTChat(): Promise<any> {
     const url = `${this.apiUrl}/v1/chat/completions`;
     const headers = {
       'Content-Type': 'application/json',

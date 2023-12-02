@@ -20,7 +20,7 @@ function HomePage() {
   const [buttons, setButtons] = React.useState([]); // State variable for user input
   const onSubmit = () => {
     setClicked(true);
-    gptService.initGptStorie(userSituation)
+    gptService.getGptStorie(userSituation)
       .then(result => {
         setStory(result);
         setClicked(false);
