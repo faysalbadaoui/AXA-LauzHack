@@ -40,7 +40,7 @@ function HomePage() {
   const onClickButtonsPage = (num, button) => {
     console.log(num);
     console.log(button);
-    gptService.initGptStorie(userSituation)
+    gptService.getGptStorie(userSituation)
       .then(result => {
         setStory(result);
         gptService.getGptStorieOptions().then(result => {
