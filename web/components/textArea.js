@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Button, Textarea, button } from "@nextui-org/react";
-function MessageArea({ text, buttons }) {
+function MessageArea({ text, buttons, onClickTheButton }) {
     const chunkSize = 10;
     const [currentText, setCurrentText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
     
+    const onClickButton = (button) => {
+        onClickTheButton(button)
+    }
+
     useEffect(() => {
       const interval = setInterval(() => {
         if (currentIndex < text.length) {
@@ -25,9 +29,9 @@ function MessageArea({ text, buttons }) {
         </div>
         {currentText == text && (
             <div className="w-full flex flex.row justify-around mt-5">
-                <Button className="bg-[#9932CC]">{buttons[0]}</Button>
-                <Button className="bg-[#9932CC]">{buttons[0]}</Button>
-                <Button className="bg-[#FF0000]">End</Button>
+                <Button className="bg-[#9932CC]" onClick={onClickButton(buttons[0])}>{buttons[0]}</Button>
+                <Button className="bg-[#9932CC]" onClick={onClickButton(buttons[1])}>{buttons[0]}</Button>
+                <Button className="bg-[#FF0000]" onClick={onClickButton("End")}>End Story</Button>
             </div>
         )}
     </>
