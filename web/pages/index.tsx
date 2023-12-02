@@ -126,9 +126,7 @@ function HomePage() {
               Connect Wallet
             </Button>
         )}
-        { isWalletConnected && (
-            <h2>Wallet Connected</h2>
-        )}
+
           </div>
           
           {step === 1 && (
@@ -167,7 +165,16 @@ function HomePage() {
               <MessageArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
             </div>    
           )}      
-            
+          {step === 3 && (
+            <div className="self-center shadow shadow-red-500/90 hover:shadow-red-500/90 flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] max-w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
+              <h1 className="text-center font-bold text-[4vh] mb-10">
+                We're done. Now generate some tokens!
+              </h1>
+              { isWalletConnected && (
+                  <h2>Mint $AKA tokens</h2>
+              )}
+            </div>    
+          )}  
       </div>
     </>
   );
