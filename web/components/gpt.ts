@@ -8,7 +8,8 @@ export class GPTChatService {
     //this.apiUrl = process.env.CHATGPT_PUBLIC_API_URL;
     //this.apiKey = process.env.CHATGPT_PUBLIC_API_KEY;
     this.apiUrl = "https://api.openai.com";
-    this.apiKey = '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';
+    // this.apiKey = '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'; // lauzhack
+    this.apiKey = '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'; // faysal
     this.messages = [];
   }
 
@@ -16,26 +17,54 @@ export class GPTChatService {
     this.messages.push({ role: 'user', content: 'Compose a story chapter comprising 30 words based on the following prompt: \n' + prompt });
 
     var responseBody = await this.callChatGPTChat();
+
+    if (responseBody == false){
+      return "The story is a dream. Thank you for your participation.";
+    }
+
     var message = responseBody.choices[0].message.content;
     return message;
   }
 
   public async getGptStorieOptions(): Promise<string[]> {
     
-    this.messages.push({ role: 'system', content: 'Give me two adjective words strictly separated by a comma that will be used to continue with the next chapter of the story.' });
+    //this.messages.push({ role: 'user', content: 'Give me strictly two adjective word strictly separated by a comma like "replace word one, recplace word two" that will be used to continue with the next chapter of the story.' });
+    this.messages.push({ role: 'user', content: 'Provide two adjective words, strictly separated by a comma (e.g., "word one, word two"), to be used for the next chapter of the story.' });
+    var intent = 0;
+
+    do{
+      var responseBody = await this.callChatGPTChat();
+
+      if (responseBody == false){
+        adjectives = ['creative', 'pessimist'];
+      } else {
+        var str_adjectives = responseBody.choices[0].message.content;
+        var adjectives = []
+        adjectives = str_adjectives.split(',');
+        intent++;  
+      }
+      debugger;
+    } while (adjectives.length != 2 && intent < 5);
+
+    if (intent >= 5){
+      adjectives = ['creative', 'pessimist'];
+    }
+
+    return adjectives;
+  }
+
+  public async doGptStorieOption(prompt: string): Promise<string> {
+    
+    this.messages.push({ role: 'system', content: 'Continue the next part of the story, without title, taking into account the provided adjectives.    :\n ' + prompt });
+
     var responseBody = await this.callChatGPTChat();
 
-
-    //responseBody.then((response) => {});
-
-    var keys = responseBody.choices[0].message.content;
-    if (keys.includes(',')) {
-      keys = keys.split(',');
-    } else {
-      return ['creative', 'pessimist'];
+    if (responseBody == false){
+      return "The next chapter story is secret. Thank you for your participation.";
     }
-    
-    return keys;
+
+    var message = responseBody.choices[0].message.content;
+    return message;
   }
 
 
@@ -66,18 +95,23 @@ export class GPTChatService {
         body: body,
       });
 
-      
       if (!response.ok) {
         const errorText = await response.text();
+        debugger;
+        return false;
 
         //throw new Error(`Failed to send messages: ${errorText}`);
+        // ficar un conte inventat per fer el pego.
 
       }
       const responseBody = await response.json();
       return responseBody;
     } catch (error) {
       console.error('Error sending messages:', error);
+      debugger;
+      return false;
       //throw error;
+      // ficar un conte inventat per fer el pego.
     }
   }
 
