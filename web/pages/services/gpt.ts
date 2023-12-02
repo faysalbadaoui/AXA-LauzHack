@@ -12,10 +12,9 @@ export class GPTChatService {
     this.messages = [];
   }
 
-  public async initGptStorie(prompt: string): Promise<string> {
-    this.messages.push({ role: 'user', content: 'create a story from this prompt: \n' + prompt }); // donam dues paraules claus per continuar la historia
+  public async getGptStorie(prompt: string): Promise<string> {
+    this.messages.push({ role: 'user', content: 'Compose a story chapter comprising 30 words based on the following prompt: \n' + prompt });
 
-    
     var responseBody = await this.sendMessages();
     var message = responseBody.choices[0].message.content;
     return message;
@@ -23,9 +22,7 @@ export class GPTChatService {
 
   public async getGptStorieOptions(): Promise<string[]> {
     
-    this.messages.push({ role: 'system', content: 'Give me two words separated by a comma that are key to continuing the story, then they will be used to further generate the story.' }); // donam dues paraules claus per continuar la historia
-    
-    
+    this.messages.push({ role: 'system', content: 'Give me two words strictly separated by a comma that are key to continuing the next chapter of the story, then they will be used to generate a new chapter.' });
     var responseBody = await this.sendMessages();
 
 
