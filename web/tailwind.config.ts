@@ -16,7 +16,7 @@ module.exports = {
       "secutry-theme": {
         extend: "dark",
         colors: {
-          primary: "#00F260",
+          primary: "#9932CC",
           secondary: "#0575E6",
           focus: "#F182F6",
         },
