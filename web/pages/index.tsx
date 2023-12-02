@@ -6,7 +6,12 @@ import {Textarea} from "@nextui-org/react";
 
 function HomePage() {
   const [step, setStep] = React.useState(1);
+  const [userSituation, setUserSituation] = React.useState(""); // State variable for user input
 
+  const handleSituationChange = (e) => {
+    setUserSituation(e.target.value); 
+    console.log(userSituation);
+  };
   return (
       <div className="w-full h-full bg-gradient-to-b from-[#000435] to-[#28002E] items-center justify-center">
         {step === 1 && (
@@ -20,6 +25,8 @@ function HomePage() {
               placeholder="Enter your situation"
               disableAnimation
               disableAutosize
+              value={userSituation} // Bind state to Textarea
+              onChange={handleSituationChange} // Set the change handler
               classNames={{
                 base: "sm:w-[600px] w-[400px]",
                 input: "resize-y min-h-[190px]",
