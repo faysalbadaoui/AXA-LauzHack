@@ -6,28 +6,38 @@ import {Spinner, Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
 import {GPTChatService} from "../components/gpt";
 import Image from "next/image";
-require('dotenv').config()
 const { ethers } = require('ethers');
-const { web3} = require('web3');
+import Web3 from 'web3';
+
 const CONTRACT_ADDRESS = "0x2492d1CeF3d23EC48ADa469003D8652375d791f0";
 
 const mintNFTUser = async () => {
 
     if(window !== undefined){
       try{
+          const web3 = new Web3(window.ethereum);
+          await window.ethereum.enable();
           const { ethereum } = window;
-          const contractArtifact = require('../smart-contract-abi/AxaToken.json');
+          const contractArtifact = require('./AxaToken.json');
           const contractABI = contractArtifact.abi;
           const providerU = "https://thrumming-boldest-scion.ethereum-goerli.quiknode.pro/78519f495e10e3f34c65ea1d477f8dbc4de92688/";
           const contractAddress = CONTRACT_ADDRESS;
           const accountPrivateKey = "0f8c237210aa9b0a3a47ee8fefc4a6f5166b9b26acc6e634d24a00a255d174ca";
-          const provider = new ethers.providers.Web3Provider(providerU);
+          const provider = new ethers.providers.JsonRpcProvider(providerU);
           const signer = new ethers.Wallet(accountPrivateKey, provider);
           const contract = new ethers.Contract(contractAddress, contractABI, signer);
           
           console.log("Account address: ", signer.address);
+          try{
+            const tx = contract.mint(signer.address, ethers.utils.parseUnits("30"));
+            tx.wait();
+          }catch(error){
+            console.error('Error:', error);
+          }
+         
         
       }catch(error){
+        console.error('Error:', error);
       }
     }
 
