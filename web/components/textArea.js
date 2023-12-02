@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Textarea, button } from "@nextui-org/react";
 import Typewriter from 'typewriter-effect'; 
 
-function MessageArea({ text, buttons, onClickTheButton }) {
+function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
     const chunkSize = 10;
     const [currentText, setCurrentText] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);

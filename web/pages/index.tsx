@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import {Spinner, Textarea} from "@nextui-org/react";
 import MessageArea from "../components/textArea.js";
 import {GPTChatService} from "../components/gpt";
-
+import Image from "next/image";
 function HomePage() {
   const [step, setStep] = React.useState(1);
   const [userSituation, setUserSituation] = React.useState(""); 
@@ -17,7 +17,7 @@ function HomePage() {
     console.log(userSituation);
   };
   const [buttons, setButtons] = React.useState([]);
-
+  const [imageUrl, setImageUrl] = React.useState("");
   const onSubmit = () => {
     setClicked(true);
     gptService.getGptStorie(userSituation)
@@ -65,6 +65,7 @@ function HomePage() {
         <title>What Insurance could I need?</title>
       </Head>
       <div className="flex w-full flex-col h-screen items-center justify-center bg-gradient-to-b from-[#00008F] to-[#28002E]">
+          <Image src="/res/logo.png" alt="logo" width={300} height={200} />
           {step === 1 && (
             <div className="self-center flex flex-col sm:p-20 shadow shadow-red-500/90 hover:shadow-red-500/90 p-5 sm:m-0 m-2 sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold sm:text-[4vh] text-[3vh] mb-10">
@@ -98,7 +99,7 @@ function HomePage() {
               <h1 className="text-center font-bold text-[4vh] mb-10">
                 Here's what Insunator thinks:
               </h1>
-              <MessageArea text={story} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
+              <MessageArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
             </div>    
           )}        
       </div>
