@@ -18,6 +18,7 @@ function HomePage() {
   };
   const [buttons, setButtons] = React.useState([]);
   const [imageUrl, setImageUrl] = React.useState("");
+  
   const onSubmit = () => {
     setClicked(true);
     gptService.getGptStorie(userSituation)
