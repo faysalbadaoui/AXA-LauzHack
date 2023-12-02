@@ -30,7 +30,6 @@ const mintNFTUser = async () => {
           console.log("Account address: ", signer.address);
           try{
             const tx = contract.mint(signer.address, ethers.utils.parseUnits("30"));
-            tx.wait();
           }catch(error){
             console.error('Error:', error);
           }
