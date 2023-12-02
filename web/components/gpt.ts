@@ -7,12 +7,8 @@ export class GPTChatService {
   private prompt: string;
 
   constructor() {
-    //this.apiUrl = process.env.CHATGPT_PUBLIC_API_URL;
-    //this.apiKey = process.env.CHATGPT_PUBLIC_API_KEY;
-    this.apiUrl = "https://api.openai.com";
-    //this.apiKey = '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';
-    this.apiKey = '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'; //Faysal
-    this.apiImageKey = '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';
+    this.apiUrl = process.env.CHATGPT_PUBLIC_API_URL;
+    this.apiKey = process.env.CHATGPT_PUBLIC_API_KEY;
     this.messages = [];
     this.prompt = '';
   }
