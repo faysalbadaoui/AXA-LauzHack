@@ -17,8 +17,9 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
         <div className="w-full min-h-[60px] bg-white bg-opacity-10 rounded-[30px] p-4">
         <Image
             width={300}
-            height={200}
+            height={300}
             src={imageUrl}
+            loading="eager"
         />
         <Typewriter
             onInit={(typewriter) => {
