@@ -7,19 +7,56 @@ export class GPTChatService {
   private prompt: string;
 
   private axa_services: Record<number, {serviceName: string, serviceURL: string}> = {
-    1: { serviceName: "Car and Motorcycle", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    2: { serviceName: "Health", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    3: { serviceName: "Life and Accidents", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    4: { serviceName: "Home", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    5: { serviceName: "Investment", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    6: { serviceName: "Other Insurances", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    7: { serviceName: "Dogs", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    8: { serviceName: "Travel and Skiing", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    9: { serviceName: "Legal Protection and Cyber Risk", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    10: { serviceName: "Hunting", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    11: { serviceName: "Civil Liability", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    12: { serviceName: "Fishing", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    1: { serviceName: "Car insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    2: { serviceName: "Motorcycle insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/health-accident/supplementary-insurance.html" },
+    3: { serviceName: "Travel insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    4: { serviceName: "Boat insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    5: { serviceName: "Rental car insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    6: { serviceName: "Supplementary insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    7: { serviceName: "Compare basic insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    8: { serviceName: "Accident insurance for domestic staff", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    9: { serviceName: "Interim accident insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    10: { serviceName: "Aviation insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    11: { serviceName: "Liability insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    12: { serviceName: "Household contents insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    13: { serviceName: "Items & electronics", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    14: { serviceName: "Valuable items insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    15: { serviceName: "Rental guarantee", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    16: { serviceName: "Building insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    17: { serviceName: "House construction insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    18: { serviceName: "Mortgages", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    19: { serviceName: "Legal protection insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    20: { serviceName: "Personal cyber insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    21: { serviceName: "Payment protection insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    22: { serviceName: "My pension fund", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    23: { serviceName: "Private pension provision", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    24: { serviceName: "Investing", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    25: { serviceName: "Protect against the risks of disability and death", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    26: { serviceName: "Planning your retirement", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
   };
+
+
+
+  
+  
+  
+  
+  
+  
+
+
+  
+  
+
+
+
+
+
+  
+
+
+  
+
 
   constructor() {
     this.apiImageKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_IMAGE_KEY
@@ -112,7 +149,7 @@ export class GPTChatService {
   public async doGptAxaServiceSelection(prompt: string): Promise<{serviceName: string, serviceURL: string}> {
     
     debugger;
-    this.messages.push({ role: 'system', content: 'A partir de esta tabla:\n\n' + this.axaObjectToTable() + '\n\n Muestra solo la columna del "ID" de los Servicios que le corresponde a esta parte de la historia:\n\n' + prompt });
+    this.messages.push({ role: 'system', content: 'Starting from this table:   \n\n' + this.axaObjectToTable() + '\n\n Show only the "ID" column of the services that correspond to this part of the story:    \n\n' + prompt });
 
     var responseBody = await this.callChatGPTChat();
 
