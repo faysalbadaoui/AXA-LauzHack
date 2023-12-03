@@ -13,11 +13,10 @@ const CONTRACT_ADDRESS = "0x2492d1CeF3d23EC48ADa469003D8652375d791f0";
 
 const mintNFTUser = async () => {
 
-    if(window !== undefined){
+    if(window !== undefined && (window as any).ethereum !== undefined){
       try{
-          const web3 = new Web3(window.ethereum);
-          await window.ethereum.enable();
-          const { ethereum } = window;
+          const web3 = new Web3((window as any).ethereum);
+          await (window as any).ethereum.enable();
           const contractArtifact = require('./AxaToken.json');
           const contractABI = contractArtifact.abi;
           const providerU = process.env.NEXT_PUBLIC_providerUrl;
@@ -59,9 +58,9 @@ function HomePage() {
   const [imageUrl, setImageUrl] = React.useState("");
   
   const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof (window as any).ethereum !== 'undefined') {
       try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
         setIsWalletConnected(true);
         mintNFTUser();
       } catch (error) {
