@@ -1,15 +1,30 @@
-
 export class GPTChatService {
+  
   private apiUrl: string;
   private apiKey: string;
   private apiImageKey: string;
   private messages: any;
   private prompt: string;
 
+  private axa_services: Record<number, {serviceName: string, serviceURL: string}> = {
+    1: { serviceName: "Car and Motorcycle", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    2: { serviceName: "Health", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    3: { serviceName: "Life and Accidents", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    4: { serviceName: "Home", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    5: { serviceName: "Investment", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    6: { serviceName: "Other Insurances", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    7: { serviceName: "Dogs", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    8: { serviceName: "Travel and Skiing", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    9: { serviceName: "Legal Protection and Cyber Risk", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    10: { serviceName: "Hunting", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    11: { serviceName: "Civil Liability", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    12: { serviceName: "Fishing", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+  };
+
   constructor() {
-    this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL
-    this.apiKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY
     this.apiImageKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_IMAGE_KEY
+    this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL;
+    this.apiKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY;
     this.messages = [];
     this.prompt = '';
   }
@@ -57,7 +72,6 @@ export class GPTChatService {
         adjectives = str_adjectives.split(',');
         intent++;  
       }
-      debugger;
     } while (adjectives.length != 2 && intent < 5);
 
     if (intent >= 5){
@@ -67,9 +81,9 @@ export class GPTChatService {
     return adjectives;
   }
 
-  public async doGptStorieOption(prompt: string): Promise<string> {
+  public async doGptStorieOption(option: string): Promise<string> {
     
-    this.messages.push({ role: 'system', content: 'Continue the next part of the story, without title, taking into account the provided adjectives.    :\n ' + prompt });
+    this.messages.push({ role: 'system', content: 'Continue the next part of the story, without title, comprising 30 words taking into account the provided adjectives.    :\n ' + option });
 
     var responseBody = await this.callChatGPTChat();
 
@@ -81,7 +95,48 @@ export class GPTChatService {
     return message;
   }
 
-  public async getGptImage(prompt: string): Promise<string> {    
+  public async doGptStorieEnding(): Promise<string> {
+    
+    this.messages.push({ role: 'system', content: 'Compose the conclusion with 80 words of the narrative featuring a scenario wherein the insurance firm AXA delivers a service that encompasses the repercussions of the accident or incident.' });
+
+    var responseBody = await this.callChatGPTChat();
+
+    if (responseBody == false){
+      return "AXA insurance company has given insurance that solves all the problems.";
+    }
+
+    var message = responseBody.choices[0].message.content;
+    return message;
+  }
+
+  public async doGptAxaServiceSelection(prompt: string): Promise<{serviceName: string, serviceURL: string}> {
+    
+    debugger;
+    this.messages.push({ role: 'system', content: 'A partir de esta tabla:\n\n' + this.axaObjectToTable() + '\n\n Muestra solo la columna del "ID" de los Servicios que le corresponde a esta parte de la historia:\n\n' + prompt });
+
+    var responseBody = await this.callChatGPTChat();
+
+    if (responseBody == false){
+      return "All AXA services are the best.";
+    }
+
+    var message = responseBody.choices[0].message.content;
+    var service = this.axa_services[1];
+
+    try {
+      var service_key = parseInt(message);
+      service = this.axa_services[service_key];
+    } catch (error) {
+      console.error('Error sending messages:', error);
+      service = this.axa_services[1];
+      debugger;
+    }
+
+    return service;
+  }
+
+  public async getGptImage(prompt: string): Promise<string> {
+    
     this.prompt = 'comic book style: ' + prompt;
     var responseBody = await this.callChatGPTChatImage();
 
@@ -122,8 +177,8 @@ export class GPTChatService {
 
       if (!response.ok) {
         const errorText = await response.text();
-        debugger;
         return false;
+        debugger;
 
         //throw new Error(`Failed to send messages: ${errorText}`);
         // ficar un conte inventat per fer el pego.
@@ -133,8 +188,8 @@ export class GPTChatService {
       return responseBody;
     } catch (error) {
       console.error('Error sending messages:', error);
-      debugger;
       return false;
+      debugger;
       //throw error;
       // ficar un conte inventat per fer el pego.
     }
@@ -171,6 +226,7 @@ export class GPTChatService {
       
       if (!response.ok) {
         const errorText = await response.text();
+        debugger;
 
         //throw new Error(`Failed to send messages: ${errorText}`);
 
@@ -179,8 +235,17 @@ export class GPTChatService {
       return responseBody;
     } catch (error) {
       console.error('Error sending messages:', error);
+      debugger;
       //throw error;
     }
+  }
+
+  public axaObjectToTable(): string {
+    let outputString = "Servicio;ID\n";
+    for (const id in this.axa_services) {
+        outputString += `${this.axa_services[id].serviceName.toUpperCase()};${id}\n`;
+    }
+    return outputString;
   }
 
 }
