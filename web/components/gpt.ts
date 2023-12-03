@@ -8,7 +8,8 @@ export class GPTChatService {
 
   constructor() {
     this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL
-    this.apiKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY
+    this.apiKey = process.env.NEXT_NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY
+    this.apiImageKey = process.env.EXT_PUBLIC_CHATGPT_PUBLIC_IMAGE_API_KEY
     this.messages = [];
     this.prompt = '';
   }
@@ -141,7 +142,7 @@ export class GPTChatService {
   }
 
   public async callChatGPTChatImage(): Promise<any> {
-    const url = `${this.apiUrl}/v1//images/generations`;
+    const url = `${this.apiUrl}/v1/images/generations`;
     const headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -151,7 +152,8 @@ export class GPTChatService {
     const body = JSON.stringify({
       model: 'dall-e-3',
       prompt: this.prompt,
-      size: '1024x1024',
+      //size: '1024x1024',
+      size: '3040x1440',
       //temperature: 1,
       //top_p: 1,
       //n: 1,
