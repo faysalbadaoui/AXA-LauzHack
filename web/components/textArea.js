@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, Textarea, button } from "@nextui-org/react";
-import Typewriter from 'typewriter-effect'; 
+import { Button, Textarea, button, image } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
+import Typewriter from 'typewriter-effect';
 
 function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
     const chunkSize = 10;
     const [currentText, setCurrentText] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    console.log(imageUrl)
     
     const onClickButton = (button) => {
         onClickTheButton(button)
@@ -13,6 +15,12 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
   return (
     <>
         <div className="w-full min-h-[60px] bg-white bg-opacity-10 rounded-[30px] p-4">
+        <Image
+            width={300}
+            height={300}
+            src={imageUrl}
+            loading="eager"
+        />
         <Typewriter
             onInit={(typewriter) => {
                 typewriter.typeString(text)
@@ -31,9 +39,9 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
 
         {currentText && (
             <div className="w-full flex flex-col mt-5 justify-around ">
-                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(buttons[0])}}>{buttons[0]}</Button>
-                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(buttons[1])}}>{buttons[1]}</Button>
-                <Button className="bg-[#FF0000] m-2" onClick={() => {onClickButton("End")}}>End Story</Button>
+                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(0,buttons[0])}}>{buttons[0]}</Button>
+                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(1,buttons[1])}}>{buttons[1]}</Button>
+                <Button className="bg-[#FF0000] m-2" onClick={() => {onClickButton(2,"End")}}>End Story</Button>
             </div>
         )}
     </>

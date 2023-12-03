@@ -22,6 +22,7 @@ export class GPTChatService {
   };
 
   constructor() {
+    this.apiImageKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_IMAGE_KEY
     this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL;
     this.apiKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY;
     this.messages = [];
@@ -35,6 +36,19 @@ export class GPTChatService {
 
     if (responseBody == false){
       return "The story is a dream. Thank you for your participation.";
+    }
+
+    var message = responseBody.choices[0].message.content;
+    return message;
+  }
+
+  public async getGptTitle(prompt: string): Promise<string> {
+    this.messages.push({ role: 'user', content: 'Given the following text, create a compelling five-word title that encapsulates its essence: \n' + prompt });
+
+    var responseBody = await this.callChatGPTChat();
+
+    if (responseBody == false){
+      return "Whispers of Eternity: Unveiling the Tapestry of Time";
     }
 
     var message = responseBody.choices[0].message.content;
@@ -126,13 +140,11 @@ export class GPTChatService {
     this.prompt = 'comic book style: ' + prompt;
     var responseBody = await this.callChatGPTChatImage();
 
-    var keys : string;
     if (responseBody == false){
-      keys = 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-HL3itsiK4BaIX5fQR2OkE8T2/user-63L3WQrKtpArmIckMx9hskYG/img-xUxEmOL6TnCLIojaMa9mcSXV.png?st=2023-12-02T21%3A14%3A44Z&se=2023-12-02T23%3A14%3A44Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-01T22%3A41%3A11Z&ske=2023-12-02T22%3A41%3A11Z&sks=b&skv=2021-08-06&sig=feAtpCT/BPPRWtdtESUecZ3H2/aLlTruiwhh3aWG2AE%3D';
-    } else {
-      keys = responseBody.data[0].url;
+      return 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-HL3itsiK4BaIX5fQR2OkE8T2/user-63L3WQrKtpArmIckMx9hskYG/img-xUxEmOL6TnCLIojaMa9mcSXV.png?st=2023-12-02T21%3A14%3A44Z&se=2023-12-02T23%3A14%3A44Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-01T22%3A41%3A11Z&ske=2023-12-02T22%3A41%3A11Z&sks=b&skv=2021-08-06&sig=feAtpCT/BPPRWtdtESUecZ3H2/aLlTruiwhh3aWG2AE%3D';
     }
 
+    var keys = responseBody.data[0].url;
     return keys;
   }
 
@@ -151,7 +163,7 @@ export class GPTChatService {
       //top_p: 1,
       //n: 1,
       //stream: false,
-      max_tokens: 200,
+      //max_tokens: 200,
       //presence_penalty: 0,
       //frequency_penalty: 0,
     });
@@ -184,7 +196,7 @@ export class GPTChatService {
   }
 
   public async callChatGPTChatImage(): Promise<any> {
-    const url = `${this.apiUrl}/v1//images/generations`;
+    const url = `${this.apiUrl}/v1/images/generations`;
     const headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
