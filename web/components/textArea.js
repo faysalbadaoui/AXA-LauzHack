@@ -15,12 +15,15 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
   return (
     <>
         <div className="w-full min-h-[60px] bg-white bg-opacity-10 rounded-[30px] p-4">
+        <div className="w-[300px] h-[300px] bg-blue-900 mb-5">
         <Image
             width={300}
             height={300}
             src={imageUrl}
             loading="eager"
         />
+        </div>
+
         <Typewriter
             onInit={(typewriter) => {
                 typewriter.typeString(text)
@@ -35,7 +38,6 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
                 .start();
             }}
             />
-        </div>
 
         {currentText && (
             <div className="w-full flex flex-col mt-5 justify-around ">
@@ -44,6 +46,9 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
                 <Button className="bg-[#FF0000] m-2" onClick={() => {onClickButton(2,"End")}}>End Story</Button>
             </div>
         )}
+        
+        </div>
+
     </>
 
   );
