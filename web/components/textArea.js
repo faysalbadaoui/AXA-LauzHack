@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, Textarea, button } from "@nextui-org/react";
-import Typewriter from 'typewriter-effect'; 
+import { Button, Textarea, button, image } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
+import Typewriter from 'typewriter-effect';
 
 function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
     const chunkSize = 10;
     const [currentText, setCurrentText] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    console.log(imageUrl)
     
     const onClickButton = (button) => {
         onClickTheButton(button)
@@ -13,6 +15,11 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
   return (
     <>
         <div className="w-full min-h-[60px] bg-white bg-opacity-10 rounded-[30px] p-4">
+        <Image
+            width={300}
+            height={200}
+            src={imageUrl}
+        />
         <Typewriter
             onInit={(typewriter) => {
                 typewriter.typeString(text)

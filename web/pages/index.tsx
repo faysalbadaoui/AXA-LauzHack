@@ -133,11 +133,6 @@ function HomePage() {
       <div className="flex w-full flex-col h-screen items-center justify-center bg-gradient-to-b from-[#00008F] to-[#28002E]">
           <div className="flex flex-row">
           <Image src="/res/logo.png" alt="logo" width={250} height={150} />
-          { !isWalletConnected && (
-            <Button className="bg-[#9932CC] mt-10" onPress={connectWallet}>
-              Connect Wallet
-            </Button>
-        )}
 
           </div>
           
@@ -183,7 +178,9 @@ function HomePage() {
                 We're done. Now generate some tokens!
               </h1>
               { isWalletConnected && (
-                  <h2>Mint $AKA tokens</h2>
+                  <Button className="bg-[#9932CC] mt-10" onPress={connectWallet}>
+                  Mint $AKA tokens
+                  </Button>
               )}
             </div>    
           )}  
