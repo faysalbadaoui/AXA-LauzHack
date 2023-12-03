@@ -11,8 +11,8 @@ import Web3 from 'web3';
 
 const CONTRACT_ADDRESS = "0x2492d1CeF3d23EC48ADa469003D8652375d791f0";
 
-const mintNFTUser = async () => {
-
+const mintNFTUser = async (clientS) => {
+    console.log("clientS: ", clientS);
     if(window !== undefined && (window as any).ethereum !== undefined){
       try{
           const web3 = new Web3((window as any).ethereum);
@@ -28,7 +28,7 @@ const mintNFTUser = async () => {
           
           console.log("Account address: ", signer.address);
           try{
-            const tx = contract.mint(signer.address, ethers.utils.parseUnits("30"));
+            const tx = contract.mint(clientS, ethers.utils.parseUnits("30"));
           }catch(error){
             console.error('Error:', error);
           }
@@ -49,10 +49,9 @@ function HomePage() {
   const gptService = new GPTChatService(); 
   const [clicked, setClicked] = React.useState(false); 
   const [story, setStory] = React.useState(""); 
-
+  const [client, setClient] = React.useState("");
   const handleSituationChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserSituation(e.target.value); 
-    console.log(userSituation);
   };
   const [buttons, setButtons] = React.useState([]);
   const [imageUrl, setImageUrl] = React.useState("");
@@ -60,9 +59,12 @@ function HomePage() {
   const connectWallet = async () => {
     if (typeof (window as any).ethereum !== 'undefined') {
       try {
-        await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        const clientR = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        console.log('client:', clientR);     
+        setClient(clientR[0]);
+        console.log('client:', clientR[0]);
         setIsWalletConnected(true);
-        mintNFTUser();
+        mintNFTUser(clientR[0]);
       } catch (error) {
         console.error('Error connecting to wallet:', error);
       }
