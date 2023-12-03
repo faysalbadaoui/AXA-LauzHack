@@ -53,6 +53,8 @@ export class GPTChatService {
     }
 
     var message = responseBody.choices[0].message.content;
+    this.messages.push({ role: 'assistant', content: message });
+
     return message;
   }
 
@@ -60,19 +62,21 @@ export class GPTChatService {
     this.messages.push({ role: 'user', content: 'Given the following text, create a compelling five-word title that encapsulates its essence: \n' + prompt });
 
     var responseBody = await this.callChatGPTChat();
-    this.messages.pop();
+    //this.messages.pop();
     if (responseBody == false){
       return "Whispers of Eternity: Unveiling the Tapestry of Time";
     }
 
     var message = responseBody.choices[0].message.content;
+    this.messages.push({ role: 'assistant', content: message });
+
     return message;
   }
 
   public async getGptStorieOptions(): Promise<string[]> {
     
     //this.messages.push({ role: 'user', content: 'Give me strictly two adjective word strictly separated by a comma like "replace word one, recplace word two" that will be used to continue with the next chapter of the story.' });
-    this.messages.push({ role: 'user', content: 'Provide two adjective words, strictly separated by a comma (e.g., "word one, word two"), to be used for the next chapter of the story.' });
+    this.messages.push({ role: 'user', content: 'Provide two related adjective words, strictly separated by a comma (e.g., "word one, word two"), to be used for the next chapter of the story.' });
     var intent = 0;
 
     do{
@@ -97,7 +101,7 @@ export class GPTChatService {
 
   public async doGptStorieOption(option: string): Promise<string> {
     
-    this.messages.push({ role: 'system', content: 'Continue the next part of the story, without title, comprising 30 words taking into account the provided adjectives.    :\n ' + option });
+    this.messages.push({ role: 'user', content: 'Continue the next part of the story, without title, comprising 30 words taking into account the provided adjectives.    :\n ' + option });
 
     var responseBody = await this.callChatGPTChat();
 
@@ -106,12 +110,14 @@ export class GPTChatService {
     }
 
     var message = responseBody.choices[0].message.content;
+    this.messages.push({ role: 'assistant', content: message });
+
     return message;
   }
 
   public async doGptStorieEnding(): Promise<string> {
     
-    this.messages.push({ role: 'system', content: 'Compose the conclusion with 60 words of the narrative featuring a scenario wherein the insurance firm AXA delivers a service that encompasses the repercussions of the accident or incident.' });
+    this.messages.push({ role: 'user', content: 'Follow the story in 60 words that generates an accident in which the insurance company AXA offers a solution' });
 
     var responseBody = await this.callChatGPTChat();
 
@@ -120,12 +126,14 @@ export class GPTChatService {
     }
 
     var message = responseBody.choices[0].message.content;
+    this.messages.push({ role: 'assistant', content: message });
+
     return message;
   }
 
   public async doGptAxaServiceSelection(prompt: string): Promise<{serviceName: string, serviceURL: string}> {
     
-    this.messages.push({ role: 'system', content: 'Starting from this table:   \n\n' + this.axaObjectToTable() + '\n\n Show only the "ID" column of a single service that corresponds to this part of the history:   \n\n' + prompt + '\n\n The output must only be a number    '});
+    this.messages.push({ role: 'user', content: 'Starting from this table:   \n\n' + this.axaObjectToTable() + '\n\n Show only the "ID" column of a single service that corresponds to this part of the history:   \n\n' + prompt + '\n\n The output must only be a number    '});
 
     var responseBody = await this.callChatGPTChat();
 
