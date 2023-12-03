@@ -8,8 +8,8 @@ export class GPTChatService {
 
   constructor() {
     this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL
-    this.apiKey = process.env.NEXT_NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY
-    this.apiImageKey = process.env.EXT_PUBLIC_CHATGPT_PUBLIC_IMAGE_API_KEY
+    this.apiKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_KEY
+    this.apiImageKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_IMAGE_KEY
     this.messages = [];
     this.prompt = '';
   }
@@ -82,6 +82,7 @@ export class GPTChatService {
   }
 
   public async getGptImage(prompt: string): Promise<string> {
+    return 'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg¡';
     
     this.prompt = 'comic book style: ' + prompt;
     var responseBody = await this.callChatGPTChatImage();

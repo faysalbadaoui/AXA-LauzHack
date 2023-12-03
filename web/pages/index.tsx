@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { Button } from "@nextui-org/button";
 import {Spinner, Textarea} from "@nextui-org/react";
@@ -7,22 +7,50 @@ import MessageArea from "../components/textArea.js";
 import {GPTChatService} from "../components/gpt";
 import Image from "next/image";
 const { ethers } = require('ethers');
+import Web3 from 'web3';
+
+const CONTRACT_ADDRESS = "0x2492d1CeF3d23EC48ADa469003D8652375d791f0";
+
+const mintNFTUser = async () => {
+
+    if(window !== undefined){
+      try{
+          const web3 = new Web3(window.ethereum);
+          await window.ethereum.enable();
+          const { ethereum } = window;
+          const contractArtifact = require('./AxaToken.json');
+          const contractABI = contractArtifact.abi;
+          const providerU = process.env.NEXT_PUBLIC_providerUrl;
+          const contractAddress = CONTRACT_ADDRESS;
+          const accountPrivateKey = process.env.NEXT_PUBLIC_accountPrivateKey
+          const provider = new ethers.providers.JsonRpcProvider(providerU);
+          const signer = new ethers.Wallet(accountPrivateKey, provider);
+          const contract = new ethers.Contract(contractAddress, contractABI, signer);
+          
+          console.log("Account address: ", signer.address);
+          try{
+            const tx = contract.mint(signer.address, ethers.utils.parseUnits("30"));
+          }catch(error){
+            console.error('Error:', error);
+          }
+         
+        
+      }catch(error){
+        console.error('Error:', error);
+      }
+    }
+
+}
 
 function HomePage() {
-  const contractArtifact = require('./AquaSaveToken.json');
-  const contractABI = contractArtifact.abi;
-  const providerUrl = process.env.providerUrl;
-  const contractAddress = process.env.contractAddress;
-  const accountPrivateKey = process.env.accountPrivateKey;
-  const provider = new ethers.providers.JsonRpcProvider(providerUrl);
-  const signer = new ethers.Wallet(accountPrivateKey, provider);
-  const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
+  const [isWalletConnected, setIsWalletConnected] = React.useState(false);
   const [step, setStep] = React.useState(1);
   const [userSituation, setUserSituation] = React.useState(""); 
   const gptService = new GPTChatService(); 
   const [clicked, setClicked] = React.useState(false); 
   const [story, setStory] = React.useState(""); 
+
   const handleSituationChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserSituation(e.target.value); 
     console.log(userSituation);
@@ -30,6 +58,20 @@ function HomePage() {
   const [buttons, setButtons] = React.useState([]);
   const [imageUrl, setImageUrl] = React.useState("");
   
+  const connectWallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setIsWalletConnected(true);
+        mintNFTUser();
+      } catch (error) {
+        console.error('Error connecting to wallet:', error);
+      }
+    } else {
+      console.log('Ethereum wallet is not installed');
+    }
+  };
+
   const onSubmit = () => {
     setClicked(true);
     gptService.getGptStorie(userSituation)
@@ -39,6 +81,12 @@ function HomePage() {
         console.log(result);
         gptService.getGptStorieOptions().then(result => {
           setButtons(result);
+          console.log(result);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
+        gptService.getGptImage(result).then(result => {
+          setImageUrl(result);
           console.log(result);
         }).catch(error => {
           console.error('Error:', error);
@@ -54,12 +102,18 @@ function HomePage() {
   const onClickButtonsPage = (num, button) => {
     console.log(num);
     console.log(button);
-    gptService.getGptStorie(userSituation)
+    gptService.doGptStorieOption(button)
       .then(result => {
         setStory(result);
         console.log(result);
         gptService.getGptStorieOptions().then(result => {
           setButtons(result);
+          console.log(result);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
+        gptService.getGptImage(result).then(result => {
+          setImageUrl(result);
           console.log(result);
         }).catch(error => {
           console.error('Error:', error);
@@ -77,7 +131,11 @@ function HomePage() {
         <title>What Insurance could I need?</title>
       </Head>
       <div className="flex w-full flex-col h-screen items-center justify-center bg-gradient-to-b from-[#00008F] to-[#28002E]">
+          <div className="flex flex-row">
           <Image src="/res/logo.png" alt="logo" width={250} height={150} />
+
+          </div>
+          
           {step === 1 && (
             <div className="self-center flex flex-col sm:p-20 shadow shadow-red-500/90 hover:shadow-red-500/90 p-5 sm:m-0 m-2 sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold sm:text-[4vh] text-[3vh] mb-10">
@@ -114,7 +172,18 @@ function HomePage() {
               <MessageArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
             </div>    
           )}      
-            
+          {step === 3 && (
+            <div className="self-center shadow shadow-red-500/90 hover:shadow-red-500/90 flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] max-w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
+              <h1 className="text-center font-bold text-[4vh] mb-10">
+                We're done. Now generate some tokens!
+              </h1>
+              { isWalletConnected && (
+                  <Button className="bg-[#9932CC] mt-10" onPress={connectWallet}>
+                  Mint $AKA tokens
+                  </Button>
+              )}
+            </div>    
+          )}  
       </div>
     </>
   );
