@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
   return (
 
     <NextUIProvider>
-      <main className={inter.className}>
+      <main className={inter.className} >
         <RootLayout>
             <Component {...pageProps} />
         </RootLayout>

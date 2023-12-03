@@ -45,7 +45,11 @@ main {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+}
+
+.flex.w-full.flex-col.h-screen.items-center.justify-center.bg-gradient-to-b.from-\[\#00008F\].to-\[\#28002E\] {
+  height: 100%;
 }
 
 @keyframes scale {

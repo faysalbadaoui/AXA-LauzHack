@@ -12,6 +12,8 @@ import Web3 from 'web3';
 
 const CONTRACT_ADDRESS = "0x2492d1CeF3d23EC48ADa469003D8652375d791f0";
 
+
+
 const mintNFTUser = async (clientS) => {
     console.log("clientS: ", clientS);
     if(window !== undefined && (window as any).ethereum !== undefined){
@@ -94,6 +96,11 @@ function HomePage() {
         gptService.getGptImage(result).then(result => {
           setImageUrl(result);
           console.log(result);
+
+
+          // aqui
+
+
         }).catch(error => {
           console.error('Error:', error);
         });
@@ -205,6 +212,16 @@ function HomePage() {
               <Spinner/>
             </div>    
           )} 
+          <div className="flex flex-col h-[100px]"></div>
+          <div className="self-center  w-full max-w-[77%]  flex flex-col sm:p-20 shadow shadow-red-500/90 hover:shadow-red-500/90 p-5 sm:m-0 m-2 h-[auto] bg-[#000000] bg-opacity-50 rounded-[40px] justify-start mt-[180px] items-center">
+          <h1 className="text-center font-bold text-[4vh] mb-10 items-start">
+                          History
+                        </h1>
+            <div id="elements" className="mt-[50px] items-center ">
+            </div>
+          </div>
+          <div className="flex flex-col h-[100px]"></div>
+
       </div>
     </>
   );
