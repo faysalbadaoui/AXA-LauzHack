@@ -60,7 +60,7 @@ export class GPTChatService {
     this.messages.push({ role: 'user', content: 'Given the following text, create a compelling five-word title that encapsulates its essence: \n' + prompt });
 
     var responseBody = await this.callChatGPTChat();
-
+    this.messages.pop();
     if (responseBody == false){
       return "Whispers of Eternity: Unveiling the Tapestry of Time";
     }
