@@ -117,7 +117,7 @@ export class GPTChatService {
     var responseBody = await this.callChatGPTChat();
 
     if (responseBody == false){
-      return "All AXA services are the best.";
+      return this.axa_services[1];
     }
 
     var message = responseBody.choices[0].message.content;
