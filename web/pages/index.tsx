@@ -53,6 +53,9 @@ function HomePage() {
   const [clicked, setClicked] = React.useState(false); 
   const [story, setStory] = React.useState(""); 
   const [client, setClient] = React.useState("");
+  const [service, setService] = React.useState({});
+  const [isServiceLoaded, setServiceLoaded] = React.useState(false);
+
   const handleSituationChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setUserSituation(e.target.value); 
   };
@@ -78,21 +81,21 @@ function HomePage() {
 
   const onSubmit = () => {
     setClicked(true);
-    gptService.getGptTitle(userSituation).then(result => {
-      setTitle(result);
-      console.log(result);
-    })
     gptService.getGptStorie(userSituation)
       .then(result => {
+        gptService.getGptTitle(result).then(result => {
+          setTitle(result);
+          console.log(result);
+          gptService.getGptStorieOptions().then(result => {
+            setButtons(result);
+            console.log(result);
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+        })
         setStory(result);
         setClicked(false);
         console.log(result);
-        gptService.getGptStorieOptions().then(result => {
-          setButtons(result);
-          console.log(result);
-        }).catch(error => {
-          console.error('Error:', error);
-        });
         gptService.getGptImage(result).then(result => {
           setImageUrl(result);
           console.log(result);
@@ -142,7 +145,14 @@ function HomePage() {
     }else{
       gptService.doGptStorieEnding().then(result => {
         setStory(result);
-        setStep(3);
+        gptService.doGptAxaServiceSelection(result).then(result => {
+          setService(result);
+          setServiceLoaded(true);
+          console.log(result);
+          setStep(3);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
     }).catch(error => {
       console.error('Error:', error);
     });
@@ -199,7 +209,10 @@ function HomePage() {
               <h1 className="text-center font-bold text-[4vh] mb-10">
                 We're done. Now generate some tokens!
               </h1>
-              <EndArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={onClickButtonsPage}/>
+              {isServiceLoaded && (
+                <EndArea text={story} imageUrl = {imageUrl} service = {service} onClickTheButton={onClickButtonsPage}/>
+              )
+                }
               { !isWalletConnected && (
                   <Button className="bg-[#9932CC] mt-10" onPress={connectWallet}>
                   Mint $AKA tokens

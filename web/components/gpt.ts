@@ -125,7 +125,6 @@ export class GPTChatService {
 
   public async doGptAxaServiceSelection(prompt: string): Promise<{serviceName: string, serviceURL: string}> {
     
-    debugger;
     this.messages.push({ role: 'system', content: 'Starting from this table:   \n\n' + this.axaObjectToTable() + '\n\n Show only the "ID" column of a single service that corresponds to this part of the history:   \n\n' + prompt + '\n\n The output must only be a number    '});
 
     var responseBody = await this.callChatGPTChat();
