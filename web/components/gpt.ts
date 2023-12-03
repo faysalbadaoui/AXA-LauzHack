@@ -8,32 +8,55 @@ export class GPTChatService {
 
   private axa_services: Record<number, {serviceName: string, serviceURL: string}> = {
     1: { serviceName: "Car insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    2: { serviceName: "Motorcycle insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/health-accident/supplementary-insurance.html" },
-    3: { serviceName: "Travel insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    4: { serviceName: "Boat insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    5: { serviceName: "Rental car insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    6: { serviceName: "Supplementary insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    7: { serviceName: "Compare basic insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    8: { serviceName: "Accident insurance for domestic staff", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    9: { serviceName: "Interim accident insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    10: { serviceName: "Aviation insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    11: { serviceName: "Liability insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    12: { serviceName: "Household contents insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    13: { serviceName: "Items & electronics", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    14: { serviceName: "Valuable items insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    15: { serviceName: "Rental guarantee", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    16: { serviceName: "Building insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    17: { serviceName: "House construction insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    18: { serviceName: "Mortgages", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    19: { serviceName: "Legal protection insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    20: { serviceName: "Personal cyber insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    21: { serviceName: "Payment protection insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    26: { serviceName: "Planning your retirement", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    25: { serviceName: "Protect against the risks of disability and death", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    24: { serviceName: "Investing", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    22: { serviceName: "My pension fund", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
-    23: { serviceName: "Private pension provision", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/car-insurance.html" },
+    2: { serviceName: "Motorcycle insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/motorcycle-insurance.html" },
+    3: { serviceName: "Travel insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/travel-insurance.html" },
+    4: { serviceName: "Boat insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/boat-insurance.html" },
+    5: { serviceName: "Rental car insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/hirecar-carsharing-insurance.html" },
+    6: { serviceName: "Supplementary insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/health-accident/supplementary-insurance.html" },
+    7: { serviceName: "Compare basic insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/health-accident/terminate-basic-insurance.html" },
+    8: { serviceName: "Accident insurance for domestic staff", serviceURL: "https://www.axa.ch/en/private-customers/offers/health-accident/accident-insurance-domestic-staff.html" },
+    9: { serviceName: "Interim accident insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/health-accident/interim-accident-insurance.html" },
+    10: { serviceName: "Aviation insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/vehicle-travel/aviation-insurance.html" },
+    11: { serviceName: "Liability insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/personal-liability-insurance.html" },
+    12: { serviceName: "Household contents insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/household-contents.html" },
+    13: { serviceName: "Items & electronics", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/items-electronics.html" },
+    14: { serviceName: "Valuable items insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/valuables-insurance.html" },
+    15: { serviceName: "Rental guarantee", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/rental-guarantee.html" },
+    16: { serviceName: "Building insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/building-insurance.html" },
+    17: { serviceName: "House construction insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/house-construction-insurances.html" },
+    18: { serviceName: "Mortgages", serviceURL: "https://www.axa.ch/en/private-customers/offers/property-living/mortgages.html" },
+    19: { serviceName: "Legal protection insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/law-cyber/legal-protection-insurance.html" },
+    20: { serviceName: "Personal cyber insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/law-cyber/personal-cyber-insurance.html" },
+    21: { serviceName: "Payment protection insurance", serviceURL: "https://www.axa.ch/en/private-customers/offers/law-cyber/payment-protection-insurance.html" },
+    22: { serviceName: "My pension fund", serviceURL: "https://www.axa.ch/en/private-customers/offers/pensions-assets/my-pension-fund.html" },
+    23: { serviceName: "Private pension provision", serviceURL: "https://www.axa.ch/en/private-customers/offers/pensions-assets/pillar3-private-pension-provision.html" },
+    24: { serviceName: "Investing", serviceURL: "https://www.axa.ch/en/private-customers/offers/pensions-assets/financial-investments.html" },
+    25: { serviceName: "Protect against the risks of disability and death", serviceURL: "https://www.axa.ch/en/private-customers/offers/pensions-assets/cover-disability-death.html" },
+    26: { serviceName: "Planning your retirement", serviceURL: "https://www.axa.ch/en/private-customers/offers/pensions-assets/planning-retirement.html" },
   };
+
+
+
+  
+  
+  
+  
+  
+  
+
+
+  
+  
+
+
+
+
+
+  
+
+
+  
+
 
   constructor() {
     this.apiImageKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_IMAGE_KEY
