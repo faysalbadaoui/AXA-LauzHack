@@ -20,9 +20,9 @@ const mintNFTUser = async () => {
           const { ethereum } = window;
           const contractArtifact = require('./AxaToken.json');
           const contractABI = contractArtifact.abi;
-          const providerU = "https://thrumming-boldest-scion.ethereum-goerli.quiknode.pro/78519f495e10e3f34c65ea1d477f8dbc4de92688/";
+          const providerU = process.env.NEXT_PUBLIC_providerUrl;
           const contractAddress = CONTRACT_ADDRESS;
-          const accountPrivateKey = "0f8c237210aa9b0a3a47ee8fefc4a6f5166b9b26acc6e634d24a00a255d174ca";
+          const accountPrivateKey = process.env.NEXT_PUBLIC_accountPrivateKey
           const provider = new ethers.providers.JsonRpcProvider(providerU);
           const signer = new ethers.Wallet(accountPrivateKey, provider);
           const contract = new ethers.Contract(contractAddress, contractABI, signer);
@@ -85,6 +85,12 @@ function HomePage() {
         }).catch(error => {
           console.error('Error:', error);
         });
+        gptService.getGptImage(result).then(result => {
+          setImageUrl(result);
+          console.log(result);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
         setStep(2);
       })
       .catch(error => {
@@ -96,12 +102,18 @@ function HomePage() {
   const onClickButtonsPage = (num, button) => {
     console.log(num);
     console.log(button);
-    gptService.getGptStorie(userSituation)
+    gptService.doGptStorieOption(button)
       .then(result => {
         setStory(result);
         console.log(result);
         gptService.getGptStorieOptions().then(result => {
           setButtons(result);
+          console.log(result);
+        }).catch(error => {
+          console.error('Error:', error);
+        });
+        gptService.getGptImage(result).then(result => {
+          setImageUrl(result);
           console.log(result);
         }).catch(error => {
           console.error('Error:', error);
