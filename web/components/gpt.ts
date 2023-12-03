@@ -134,7 +134,7 @@ export class GPTChatService {
 
   public async doGptStorieEnding(): Promise<string> {
     
-    this.messages.push({ role: 'system', content: 'Compose the conclusion with 80 words of the narrative featuring a scenario wherein the insurance firm AXA delivers a service that encompasses the repercussions of the accident or incident.' });
+    this.messages.push({ role: 'system', content: 'Compose the conclusion with 60 words of the narrative featuring a scenario wherein the insurance firm AXA delivers a service that encompasses the repercussions of the accident or incident.' });
 
     var responseBody = await this.callChatGPTChat();
 
@@ -149,7 +149,7 @@ export class GPTChatService {
   public async doGptAxaServiceSelection(prompt: string): Promise<{serviceName: string, serviceURL: string}> {
     
     debugger;
-    this.messages.push({ role: 'system', content: 'Starting from this table:   \n\n' + this.axaObjectToTable() + '\n\n Show only the "ID" column of the services that correspond to this part of the story:    \n\n' + prompt });
+    this.messages.push({ role: 'system', content: 'Starting from this table:   \n\n' + this.axaObjectToTable() + '\n\n Show only the "ID" column of a single service that corresponds to this part of the history:   \n\n' + prompt + '\n\n The output must only be a number    '});
 
     var responseBody = await this.callChatGPTChat();
 
