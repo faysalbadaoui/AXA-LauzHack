@@ -187,7 +187,7 @@ function HomePage() {
               <h1 className="text-center font-bold text-[4vh] mb-10">
                 We're done. Now generate some tokens!
               </h1>
-              { isWalletConnected && (
+              { !isWalletConnected && (
                   <Button className="bg-[#9932CC] mt-10" onPress={connectWallet}>
                   Mint $AKA tokens
                   </Button>
