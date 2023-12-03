@@ -35,29 +35,6 @@ export class GPTChatService {
     26: { serviceName: "Planning your retirement", serviceURL: "https://www.axa.ch/en/private-customers/offers/pensions-assets/planning-retirement.html" },
   };
 
-
-
-  
-  
-  
-  
-  
-  
-
-
-  
-  
-
-
-
-
-
-  
-
-
-  
-
-
   constructor() {
     this.apiImageKey = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_IMAGE_KEY
     this.apiUrl = process.env.NEXT_PUBLIC_CHATGPT_PUBLIC_API_URL;
