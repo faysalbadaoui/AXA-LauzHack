@@ -105,6 +105,7 @@ function HomePage() {
 
   const onClickButtonsPage = (num, button) => {
     setStep(4);
+    setImageUrl("");
     console.log(num);
     console.log(button);
     if(num === 0 || num ===1){
