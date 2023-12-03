@@ -43,7 +43,7 @@ const mintNFTUser = async () => {
 }
 
 function HomePage() {
-
+  const [title, setTitle] = React.useState("Title of your story");
   const [isWalletConnected, setIsWalletConnected] = React.useState(false);
   const [step, setStep] = React.useState(1);
   const [userSituation, setUserSituation] = React.useState(""); 
@@ -74,6 +74,10 @@ function HomePage() {
 
   const onSubmit = () => {
     setClicked(true);
+    gptService.getGptTitle(userSituation).then(result => {
+      setTitle(result);
+      console.log(result);
+    })
     gptService.getGptStorie(userSituation)
       .then(result => {
         setStory(result);
@@ -100,9 +104,11 @@ function HomePage() {
   }
 
   const onClickButtonsPage = (num, button) => {
+    setStep(4);
     console.log(num);
     console.log(button);
-    gptService.doGptStorieOption(button)
+    if(num === 0 || num ===1){
+      gptService.doGptStorieOption(button)
       .then(result => {
         setStory(result);
         console.log(result);
@@ -123,6 +129,10 @@ function HomePage() {
       .catch(error => {
         console.error('Error:', error);
       }); 
+    }else{
+      setStep(3);
+    }
+
   }
 
   return (
@@ -139,7 +149,7 @@ function HomePage() {
           {step === 1 && (
             <div className="self-center flex flex-col sm:p-20 shadow shadow-red-500/90 hover:shadow-red-500/90 p-5 sm:m-0 m-2 sm:h-[650px] h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold sm:text-[4vh] text-[3vh] mb-10">
-                Title of your  story
+               {title}
               </h1>
               <Textarea
                 label="Tell us"
@@ -167,9 +177,9 @@ function HomePage() {
           {step === 2 && (
             <div className="self-center shadow shadow-red-500/90 hover:shadow-red-500/90 flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] max-w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
               <h1 className="text-center font-bold text-[4vh] mb-10">
-                Here's what Insunator thinks:
+                {title}
               </h1>
-              <MessageArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={() => {onClickButtonsPage}}/>
+              <MessageArea text={story} imageUrl = {imageUrl} buttons = {buttons} onClickTheButton={onClickButtonsPage}/>
             </div>    
           )}      
           {step === 3 && (
@@ -184,6 +194,11 @@ function HomePage() {
               )}
             </div>    
           )}  
+          {step === 4 && (
+            <div className="self-center shadow shadow-red-500/90 hover:shadow-red-500/90 flex flex-col sm:p-20 p-5 sm:m-0 m-2 sm:min-w-[700px] max-w-[490px] sm:min-h-[650px] min-h-[600px] sm:min-w-[200px] bg-[#000000] bg-opacity-50 rounded-[40px] items-center justify-center">
+              <Spinner/>
+            </div>    
+          )} 
       </div>
     </>
   );

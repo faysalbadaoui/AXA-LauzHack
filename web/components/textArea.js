@@ -38,9 +38,9 @@ function MessageArea({ text, imageUrl, buttons, onClickTheButton }) {
 
         {currentText && (
             <div className="w-full flex flex-col mt-5 justify-around ">
-                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(buttons[0])}}>{buttons[0]}</Button>
-                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(buttons[1])}}>{buttons[1]}</Button>
-                <Button className="bg-[#FF0000] m-2" onClick={() => {onClickButton("End")}}>End Story</Button>
+                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(0,buttons[0])}}>{buttons[0]}</Button>
+                <Button className="bg-[#9932CC] m-2" onClick={() => {onClickButton(1,buttons[1])}}>{buttons[1]}</Button>
+                <Button className="bg-[#FF0000] m-2" onClick={() => {onClickButton(2,"End")}}>End Story</Button>
             </div>
         )}
     </>
